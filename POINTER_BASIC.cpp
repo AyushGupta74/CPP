@@ -9,11 +9,5 @@ int main(){
 	cout<<ptr2<<endl;
 	cout<<*ptr1<<endl;
 	cout<<**ptr2<<endl;
-	
-	
-	cout<<a;
-	
-	
-	
-	
+	cout<<a;	
 }
