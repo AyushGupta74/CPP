@@ -18,10 +18,9 @@ int main()
 	{
 		len++;
 		i++;
-    }
-    len+2;
-    j = 0;
-	while(str2[b]!= '\0')
+    	}
+  	j = 0;
+	while(str2[j]!= '\0')
 	{
 		str1[len] = str2[j]	;
 		len++;
@@ -30,5 +29,3 @@ int main()
 	str1[len]='\0';
 	cout<<str1<<endl;
 }
-	
-
