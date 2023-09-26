@@ -1,0 +1,677 @@
+RTTI
+
+
+In C++, RTTI (Run-time type information) is a mechanism that exposes information about an object’s data type at runtime and is available only for the classes which have at least one virtual function. It allows the type of an object to be determined during program execution.
+The runtime cast, which checks that the cast is valid or not for runtime type of an object using a pointer is called as dynamic_cast.
+
+ On successful casting, it returns a pointer of the converted type and, however, it fails if we try to cast an invalid type such as an object pointer that is not of the type of the desired subclass.
+
+
+
+ex:
+For example, dynamic_cast uses RTTI and the following program fails with the error “cannot dynamic_cast `b’ (of type `class B*’) to type `class D*’ (source type is not polymorphic) ” because there is no virtual function in the base class B.
+#include <iostream>
+using namespace std;
+ 
+// initialization of base class
+class B {};
+ 
+// initialization of derived class
+class D : public B
+ {
+ 	void show()
+ 	{
+ 		cout<<"in show()";
+	 }
+};
+int main()
+{
+    B* b = new D; // Base class pointer
+    D* d = dynamic_cast<D*>(b); // Derived class pointer
+    if (d != NULL)
+       d->show();
+    else
+        cout << "cannot cast B* to D*";
+   
+}
+
+
+
+#include <iostream>
+using namespace std;
+ 
+// initialization of base class
+class B
+ {
+ 	public:
+virtual	void show()
+ 	{
+ 		cout<<"in show of b()";
+	 }};
+ 
+// initialization of derived class
+class D : public B
+ {
+ 	public:
+ 	void show()
+ 	{
+ 		cout<<"in show of d ()";
+	 }
+};
+ 
+// Driver Code
+int main()
+{
+    B* b = new D; // Base class pointer
+    D* d = dynamic_cast<D*>(b); // Derived class pointer
+    if (d != NULL)
+       d->show();
+    else
+        cout << "cannot cast B* to D*";
+   
+}
+====================================================================================
+STL
+stl is used because its a good idea not to reinvent the wheel.
+resizing,sort, search
+in c++,library of generic function and classes are der
+
+why stl?
+1)to reuse well tested classes and functions.
+2)time saving
+
+components of stl
+1)containers-->its an obj which stores data ex:vector,array having specific features,containers are already implemented classes.uses template classes.
+2)algorithms-->different agorithms like sort,search,merging,copying..uses  by template fuction
+3)iterators-->obj points to an element in a container.just like pointers.
+iterator moves backward,forward as instructed by algorithm.
+
+===================================================================
+
+The C++ Standard Template Library (STL) is a collection of algorithms, data structures, and other components that can be used to simplify the development of C++ programs. The STL provides a range of containers, such as vectors, lists, and maps, as well as algorithms for searching, sorting and manipulating data.
+
+One of the key benefits of the STL is that it provides a way to write generic, reusable code that can be applied to different data types. This means that you can write an algorithm once, and then use it with different types of data without having to write separate code for each type.
+
+The STL also provides a way to write efficient code. Many of the algorithms and data structures in the STL are implemented using optimized algorithms, which can result in faster execution times compared to custom code.
+
+Some of the key components of the STL include:
+Containers: The STL provides a range of containers, such as vector, list, map, set, and stack, which can be used to store and manipulate data.
+Algorithms: The STL provides a range of algorithms, such as sort, find, and binary_search, which can be used to manipulate data stored in containers.
+Iterators: Iterators are objects that provide a way to traverse the elements of a container. The STL provides a range of iterators, such as forward_iterator, bidirectional_iterator, and random_access_iterator, that can be used with different types of containers.
+
+Advantages of the C++ Standard Template Library (STL):
+Reusability: One of the key advantages of the STL is that it provides a way to write generic, reusable code that can be applied to different data types. This can lead to more efficient and maintainable code.
+Efficient algorithms: Many of the algorithms and data structures in the STL are implemented using optimized algorithms, which can result in faster execution times compared to custom code.
+====================================================
+Containers
+Containers or container classes store objects and data.
+Containers can be described as the objects that hold the data of the same type.
+
+TYPES OF CONTAINER
+Sequence Containers: implement data structures that can be accessed in a sequential manner.
+vector-->
+1)vector is a class that creates a dynamic array allowing insertions and deletions at the back.
+2)<vector> header file
+3)iterator--->Random access
+
+A vector is a sequence container class that implements dynamic array, means size automatically changes when appending elements. A vector stores the elements in contiguous memory locations and allocates the memory as needed at run time.
+
+Difference between vector and array
+An array follows static approach, means its size cannot be changed during run time while vector implements dynamic array means it automatically resizes itself when appending elements.
+
+
+Iterators
+begin() – Returns an iterator pointing to the first element in the vector
+end() – Returns an iterator pointing to the theoretical element that follows the last element in the vector
+rbegin() – Returns a reverse iterator pointing to the last element in the vector (reverse beginning). It moves from last to first element
+rend() – Returns a reverse iterator pointing to the theoretical element preceding the first element in the vector (considered as reverse end)
+
+
+Capacity
+size() – Returns the number of elements in the vector.
+max_size() – Returns the maximum number of elements that the vector can hold.
+capacity() – Returns the size of the storage space currently allocated to the vector expressed as number of elements.
+resize(n) – Resizes the container so that it contains ‘n’ elements.
+empty() – Returns whether the container is empty.
+push_back()	It adds a new element at the end.
+pop_back()	It removes a last element from the vector.
+
+#include<iostream>  
+#include<vector>  
+using namespace std;  
+int main()  
+{  
+    vector<char> v;  
+    v.push_back('j');  
+    v.push_back('a');  
+    v.push_back('v');  
+    v.push_back('a');  
+    for(int i=0;i<v.size();i++)  
+    cout<<v[i];
+	v.pop_back();  
+     for(int i=0;i<v.size();i++)  
+    cout<<v[i];
+}  
+
+// C++ program to illustrate the
+// capacity function in vector
+#include <iostream>
+#include <vector>
+ 
+using namespace std;
+ 
+int main()
+{
+    vector<int> g1;
+ 
+    for (int i = 1; i <= 5; i++)
+        g1.push_back(i);
+ 
+    cout << "Size : " << g1.size();
+    cout << "\nCapacity : " << g1.capacity();
+    cout << "\nMax_Size : " << g1.max_size();
+ 
+    g1.push_back(10);
+  cout << "Size : " << g1.size();
+    cout << "\nCapacity : " << g1.capacity();
+    cout << "\nMax_Size : " << g1.max_size();
+    // prints the vector size after resize()
+    cout << "\nSize : " << g1.size();
+ 
+    // checks if the vector is empty or not
+    if (g1.empty() == false)
+        cout << "\nVector is not empty";
+    else
+        cout << "\nVector is empty";
+    }
+
+#include <iostream>
+#include <vector>
+ 
+using namespace std;
+ 
+int main()
+{
+    vector<int> g1;
+ 
+    for (int i = 1; i <= 5; i++)
+        g1.push_back(i);
+ 
+    cout << "Output of begin and end: ";
+    for (auto i = g1.begin(); i != g1.end(); ++i)
+        cout << *i << " ";
+}
+
+List
+Lists are sequence containers that allow non-contiguous memory allocation. As compared to the vector, the list has slow traversal, but once a position has been found, insertion and deletion are quick (constant time). 
+vector is a contiguous container while list is a non-contiguous container i.e vector stores the elements on a contiguous memory and list stores on a non-contiguous memory.
+Insertion and deletion in the middle of the vector is very costly as it takes lot of time in shifting all the elements. Linklist overcome this problem and it is implemented using list container.
+List supports a bidirectional and provides an efficient way for insertion and deletion operations.
+Traversal is slow in list as list elements are accessed sequentially while vector supports a random access.
+
+#include <iostream>  
+#include<list>  
+using namespace std;  
+int main()  
+{  
+   list<int> li={1,2,3,4};  
+   list<int>::iterator itr=li.begin();  
+   li.insert(itr,5);  
+   for(itr=li.begin();itr!=li.end();++itr)  
+   cout<<*itr;  
+   return 0;  
+}  
+
+
+Associative Containers: implement sorted data structures that can be quickly searched 
+set->Set is an associate container for storing unique sets.	<set>	Bidirectional
+Sets are a type of associative container in which each element has to be unique because the value of the element identifies it. The values are stored in a specific sorted order i.e. either ascending or descending.
+#include <iostream>  
+#include <set>  
+  
+using namespace std;  
+int main()  
+{  
+    set<int> s;  
+   
+    // Function to insert elements  
+    // in the set container  
+    s.insert(1);  
+    s.insert(4);  
+    s.insert(2);  
+    s.insert(5);  
+    s.insert(3);  
+   
+    cout << "The elements in set are: ";  
+    for (auto it = s.begin(); it != s.end(); it++)  
+        cout << *it << " ";  
+   
+    return 0;  
+}  
+
+Multiset--> is an associate container for storing non- unique sets.	<set>	Bidirectional
+map--->	Map is an associate container for storing unique key-value pairs, i.e. each key is associated with only one value(one to one mapping).	<map>	Bidirectional
+multimap--->	multimap is an associate container for storing key- value pair, and each key can be associated with more than one value.	<map>	Bidirectional
+
+======================================================================================
+
+Iterators are used to point at the memory addresses of STL containers. They are primarily used in sequences of numbers, characters etc. They reduce the complexity and execution time of the program.
+
+Operations of iterators :-
+
+1. begin() :- This function is used to return the beginning position of the container.
+
+2. end() :- This function is used to return the after end position of the container.
+
+
+// C++ code to demonstrate the working of
+// iterator, begin() and end()
+#include<iostream>
+#include<iterator> // for iterators
+#include<vector> // for vectors
+using namespace std;
+int main()
+{
+    vector<int> ar = { 1, 2, 3, 4, 5 };
+      
+    // Declaring iterator to a vector
+    vector<int>::iterator ptr;
+      
+    // Displaying vector elements using begin() and end()
+    cout << "The vector elements are : ";
+    for (ptr = ar.begin(); ptr < ar.end(); ptr++)
+        cout << *ptr << " ";
+      
+    return 0;    
+}
+===============================================
+
+Sorting is one of the most basic functions applied to data. It means arranging the data in a particular fashion, which can be increasing or decreasing. There is a builtin function in C++ STL by the name of sort(). 
+. 
+ 
+
+sort(startaddress, endaddress)
+
+startaddress: the address of the first 
+              element of the array
+endaddress: the address of the next 
+            contiguous location of the 
+            last element of the array.
+So actually sort() sorts in the 
+range of [startaddress,endaddress)
+
+#include <algorithm>
+#include <iostream>
+  
+int main()
+{
+    int arr[] = {3, 5, 1, 2, 4};
+  
+    // Sort the array in ascending order
+    std::sort(std::begin(arr), std::end(arr));
+  
+    // Print the sorted array
+    for (int i : arr)
+    {
+        std::cout << i << " ";
+    }
+  
+     
+  
+    return 0;
+}
+
+
+// C++ program to demonstrate default behaviour of
+// sort() in STL.
+#include <bits/stdc++.h>
+using namespace std;
+ 
+int main()
+{
+    int arr[] = { 1, 5, 8, 9, 6, 7, 3, 4, 2, 0 };
+    int n = sizeof(arr) / sizeof(arr[0]);
+ 
+    /*Here we take two parameters, the beginning of the
+    array and the length n upto which we want the array to
+    be sorted*/
+    sort(arr, arr + n);
+ 
+    cout << "\nArray after sorting using "
+            "default sort is : \n";
+    for (int i = 0; i < n; ++i)
+        cout << arr[i] << " ";
+ 
+    return 0;
+}
+====================================================================================#include <iostream>     
+#include <iostream>     
+using  namespace std;  
+#include<string.h>
+class date
+{
+	int dd,mm,yy;
+	public:
+		void get()
+		{
+			cout<<"enter date\n";
+			cin>>dd>>mm>>yy;
+		}
+		void put()
+		{
+			cout<<"date is "<<dd<<"/"<<mm<<"/"<<yy<<endl;
+		}
+};
+class student
+{
+	int rollno;
+	char name[10];
+	date d;
+	
+	public:
+		void get()
+		{
+			cout<<"enter rollno\n";
+			cin>>rollno;
+			cout<<"enter student name\n";
+			cin>>name;
+			d.get();
+		}
+		void put()
+		{
+			cout<<rollno<<"-------"<<name<<"-----------"<<endl;
+			d.put();
+		}
+		int getrollno()
+		{
+			return rollno;
+		}
+		char* getname()
+		{
+			return name;
+		}
+		void setrollno(int r)
+		{
+			rollno=r;
+		}
+		void setname(char* n)
+		{
+			strcpy(name,n);
+		}
+		
+		
+};
+int main()
+{
+	student s[10],temp;
+	int i,n,j;
+	cout<<"enter value of n\n";
+	cin>>n;
+	for(i=0;i<n;i++)
+	{
+		s[i].get();
+		
+	}
+	for(i=0;i<n;i++)
+	{
+		s[i].put();
+		
+	}
+	cout<<"sort information\n";
+	for(i=0;i<n;i++)
+	{
+		for(j=i+1;j<n;j++)
+		{
+			if(s[i].getrollno()>s[j].getrollno())
+			{
+				temp=s[i];
+				s[i]=s[j];
+				s[j]=temp;
+			}
+			
+		}
+	}
+	for(i=0;i<n;i++)
+	s[i].put();
+}
+===================================================================
+A Cast operator is a unary operator which forces one data type to be converted into another data type.
+
+C++ supports 4 types of casting:
+
+Static Cast::Any conversions which compiler performs implicitly can be made explicit using static_cast.
+warning messages for loss of precision will be turned off.
+programmer and compiler are made aware of the loss of precision.
+
+// C++ Program to demonstrate
+// static_cast
+#include <iostream>
+using namespace std;
+ 
+int main()
+{
+    float f = 3.5;
+ 
+    // Implicit type case
+    // float to int
+    int a = f;
+    cout << "The Value of a: " << a;
+ 
+    // using static_cast for float to int
+    int b = static_cast<int>(f);
+    cout << "\nThe Value of b: " << b;
+}
+
+======================================================
+
+Const Cast
+the expression const_cast<t>(v) can be used to changed the const qualifiers of pointers where t must be pointer .
+and actual variable is not constant.
+#include <iostream>
+using namespace std;
+  
+ 
+int main()
+{
+     int a=10;
+    const int* b=&a;
+    int* d1=const_cast<int*>(b);
+    *d1=15;
+    cout<<*d1;
+}
+
+
+Reinterpret Cast
+
+it is used to convert a pointer of some data type into a pointer of another data type, even if the data types before and after conversion are different.
+It does not check if the pointer type and data pointed by the pointer is same or not.
+Syntax : 
+ 
+
+data_type *var_name = 
+       reinterpret_cast <data_type *>(pointer_variable);
+#include <iostream>
+using namespace std;
+ 
+int main()
+{
+    int* p = new int(65);
+    char* ch = reinterpret_cast<char*>(p);
+    cout << *p << endl;
+    cout << *ch << endl;
+    cout << p << endl;
+    cout << ch << endl;
+    return 0;
+}
+reinterpret_cast is a very special and dangerous type of casting operator. And is suggested to use it using proper data type i.e., (pointer data type should be same as original data type).
+It can typecast any pointer to any other data type.
+
+===========================================================================
+Manipulator
+Manipulators are helping functions that can modify the input/output stream. It does not mean that we change the value of a variable, it only modifies the I/O stream using insertion (<<) and extraction (>>) operators. 
+
+Manipulators are special functions that can be included in the I/O statement to alter the format parameters of a stream. 
+Manipulators are operators that are used to format the data display.
+To access manipulators, the file iomanip.h should be included in the program.
+ 
+Manipulators without arguments: The most important manipulators defined by the IOStream library are provided below.
+endl: It is defined in ostream. It is used to enter a new line and after entering a new line it flushes (i.e. it forces all the output written on the screen or in the file) the output stream.
+ws: It is defined in istream and is used to ignore the whitespaces in the string sequence.
+ends: It is also defined in ostream and it inserts a null character into the output stream.
+
+#include <iostream>
+#include <istream>
+#include <sstream>
+#include <string>
+ 
+using namespace std;
+ 
+int main()
+{
+    istringstream str("           Programmer");
+    string line;
+    // Ignore all the whitespace in string
+    // str before the first word.
+    getline(str >>ws, line);
+ 
+    // you can also write str>>ws
+    // After printing the output it will automatically
+    // write a new line in the output stream.
+    cout << line << endl;
+ 
+    
+ 
+    // NULL character will be added in the Output
+    cout << "b" << ends;
+    cout << "c" << endl;
+ 
+    return 0;
+}
+=======================================================
+Some important manipulators in <iomanip> are:
+setw (val): It is used to set the field width in output operations.
+setfill (c): It is used to fill the character ‘c’ on output stream.
+setprecision (val): It sets val as the new value for the precision of floating-point values.
+setbase(val): It is used to set the numeric base value for numeric values.
+
+Some important manipulators in <ios> are:
+showpos: It forces to show a positive sign on positive numbers.
+noshowpos: It forces not to write a positive sign on positive numbers.
+showbase: It indicates the numeric base of numeric values.
+uppercase: It forces uppercase letters for numeric values.
+nouppercase: It forces lowercase letters for numeric values.
+fixed: It uses decimal notation for floating-point values.
+scientific: It uses scientific floating-point notation.
+hex: Read and write hexadecimal values for integers and it works same as the setbase(16).
+dec: Read and write decimal values for integers i.e. setbase(10).
+oct: Read and write octal values for integers i.e. setbase(10).
+left: It adjusts output to the left.
+right: It adjusts output to the right.
+
+#include <iostream>     // std::cout, std::endl  
+#include <iomanip>      // std::setfill, std::setw  
+using namespace std;  
+  
+int main () {  
+  cout << setfill ('x') << setw (10);  
+  cout << 24 << endl;  
+  return 0;  
+}  
+
+
+#include <iostream>  
+#include <iomanip>  
+using namespace std;  
+  
+int main()  
+{  
+    cout << "default fill: " << setw(10) << 42 << '\n'  
+              << "setfill('*'): " << setfill('*')  
+                                  << setw(10) << 42 << '\n';  
+}  
+
+#include <iostream>     // std::cout, std::fixed  
+#include <iomanip>      // std::setprecision  
+using namespace std;  
+  
+int main () {  
+  double f =3.14159;  
+  cout << setprecision(4) << f << '\n';  
+  cout << setprecision(2) << f << '\n';  
+  cout << fixed;  
+  cout << setprecision(5) << f << '\n';  
+  cout << setprecision(9) << f << '\n';  
+  return 0;  
+}  
+=========================================================================
+The iostream standard library has two methods cin, to accept input from standard input stream and cout to print output to the standard output stream. In this article we will learn how to read data from files into class objects and how to write data in class objects to files.
+
+Reading and writing data to and from files requires another standard library of C++ <fstream>. The three main data types of fstream are −
+
+ifstream − represents input file stream and reads information from files.
+ofstream − represents output file stream and writes information to files.
+fstream − represents general file stream and has capabilities of both.
+
+
+Creating file objects
+Syntax
+fstream/ofstream/ifstream object_name;
+
+void open(const char *filename, ios::openmode);
+ofstream file1;
+file1.open( “Employee.txt”, ios::app );
+Here file1 is the object used to open the file Employee.txt in append mode (new content gets appended at the end). Type of file1 object is ofstream which means we can write into Employee.txt.
+
+ifstream file2;
+file2.open( “Employee.txt”, ios::in );
+Here file2 is the object used to open the file Employee.txt in input mode to read the contents. Type of file1 object is ifstream which means we can only read data from Employee.txt.
+
+Writing and Reading class objects
+file1.write( (char*)&Emp_1, sizeof(Emp1) );
+Here data present in class object Emp_1 is written to file Employee.txt by calling write function. (char*)&Emp_1 is used to point at the start of an object and sizeof(Emp_1) calculates the number of bytes copied in file.
+
+file2.read( (char*)&Emp_1, sizeof(Emp1) );
+Here data present in class object Emp_1 is read from file Employee.txt by calling read function. (char*)&Emp_1 is used to point at the start of an object and sizeof(Emp_1) calculates the number of bytes read from the file.
+
+Closing the file
+file1.close();
+file2.close();
+To close the input stream and output stream of files.
+
+
+
+#include <iostream>
+#include <fstream>
+using namespace std;
+// Class to define the properties
+class Employee {
+public:
+   string Name;
+   int Employee_ID;
+   int Salary;
+};
+int main(){
+   Employee Emp_1;
+   Emp_1.Name="John";
+   Emp_1.Employee_ID=2121;
+   Emp_1.Salary=11000;
+   //Wriring this data to Employee.txt
+   ofstream file1;
+   file1.open("Employee.txt", ios::app);
+   file1.write((char*)&Emp_1,sizeof(Emp_1));
+   file1.close();
+   //Reading data from Employee.txt
+   ifstream file2;
+   file2.open("Employee.txt",ios::in);
+   file2.read((char*)&Emp_1,sizeof(Emp_1));
+   printf("\nName :%s",Emp_1.Name);
+   printf("\nEmployee ID :%d",Emp_1.Employee_ID);
+   printf("\nSalary :%d",Emp_1.Salary);
+   file2.close();
+   return 0;
+}
+Output
+Name: John
+Employee ID: 2121
+Salary: 11000
+
