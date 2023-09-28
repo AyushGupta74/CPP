@@ -22,7 +22,7 @@ class Complex{
 };
 
 void Complex::acceptParam(int r,int i){
-	real= r; 
+	real= r;
 	img= i;
 }
 
